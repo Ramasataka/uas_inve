@@ -1,5 +1,9 @@
 <?php
-    require_once 'init.php';
+require_once 'init.php';
+
+
+    $system = new System();
+    $system->start_session();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,3 +17,4 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     
 </head>
+

@@ -22,14 +22,14 @@ class Flasher {
         }
     }
 
-    public static function uploadGambar(){
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $error = $_FILES['image']['error'];
-        $tmpName = $_FILES['image']['tmp_name'];
+    public static function uploadGambar($foto, $kode){
+        $fileName = $foto['name'];
+        // $fileSize = $foto['image']['size'];
+        $error = $foto['error'];
+        $tmpName = $foto['tmp_name'];
     
         if ($error === 4) {
-            return 'orang-belajar.jpg';
+            return $msgError = "Gambar Tidak Ada";
         }
     
         $validImageExtensions = ['jpg', 'jpeg', 'png'];
@@ -37,14 +37,18 @@ class Flasher {
         $imageExt = strtolower(end($imageExtension));
     
         if (!in_array($imageExt, $validImageExtensions)) {
-            echo "<script>
-                alert('Please input a valid image')
-                </script>";
-            return false;
+            return $msgError = 'Gambar Tidak Valid';
         }
         $imageName = time() . '-' . $fileName;
-
-        move_uploaded_file($tmpName, '../img/courses/' . $imageName);
+        
+        switch($kode) {
+            case 'BARANG':
+                move_uploaded_file($tmpName, '../img/barang_img/' . $imageName);
+                break;
+            case 'USER':
+                move_uploaded_file($tmpName, '../img/user_img/' . $imageName);
+                break;
+        }
     
         return $imageName;
     }
