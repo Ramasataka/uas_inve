@@ -1,6 +1,7 @@
 <?php
 $title = 'KOMPUTER.CO | BARANG';
 include '../../header.php';
+$check = $system->checkLogin();
 if(!$check)
 {
    $redirectUrl = "../../index.php";

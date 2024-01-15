@@ -29,7 +29,7 @@ class Flasher {
         $tmpName = $foto['tmp_name'];
     
         if ($error === 4) {
-            return $msgError = "Gambar Tidak Ada";
+            return 0;
         }
     
         $validImageExtensions = ['jpg', 'jpeg', 'png'];
@@ -37,16 +37,16 @@ class Flasher {
         $imageExt = strtolower(end($imageExtension));
     
         if (!in_array($imageExt, $validImageExtensions)) {
-            return $msgError = 'Gambar Tidak Valid';
+            return 1;
         }
         $imageName = time() . '-' . $fileName;
         
         switch($kode) {
             case 'BARANG':
-                move_uploaded_file($tmpName, '../img/barang_img/' . $imageName);
+                move_uploaded_file($tmpName, '../../img/barang_img/' . $imageName);
                 break;
             case 'USER':
-                move_uploaded_file($tmpName, '../img/user_img/' . $imageName);
+                move_uploaded_file($tmpName, '../../img/user_img/' . $imageName);
                 break;
         }
     

@@ -2,10 +2,12 @@
 
 class Barang extends Database{
 
+    private $tabel = 'barang';
+
     public function tambahBarang($nama, $stock, $vendor, $gambar)
     {
         $gambarU = Flasher::uploadGambar($gambar, 'BARANG');
-        if($gambarU == 'imageName'){
+        if(!is_numeric($gambarU)){
             $sql = 'SELECT id_barang FROM barang order by id_barang desc';
             $result = $this->connectDB()->query($sql);
             if($result->rowCount() > 0){
@@ -26,7 +28,9 @@ class Barang extends Database{
 
 
                     $pdo = $this->connectDB();
-                    $query = "INSERT INTO `barang`(`id_barang`, `nama _barang`, `stok`, `vendor`, `gambar`) VALUES (:id_barang, :nama_barang, :stock, :vendor, :gambar)";
+                    $query = "INSERT INTO $this->tabel (`id_barang`, `nama _barang`, `stok`, `vendor`, `gambar`) 
+                            VALUES 
+                            (:id_barang, :nama_barang, :stock, :vendor, :gambar)";
                     $stmt = $pdo->prepare($query);
                     $stmt->bindParam(':id_barang', $format);
                     $stmt->bindParam(':nama_barang', $nama);
@@ -37,13 +41,13 @@ class Barang extends Database{
                     $insertRe = $stmt->execute();
                     if ($insertRe) {
                         Flasher::setFlasher('BARANG BERHASIL', 'DITAMBAHKAN', 'success');
-                        $redirectUrl = "tambah-data.php";
+                        $redirectUrl = "barang-tambah-data.php";
                         header("Location: $redirectUrl");
                         exit;
                     exit;
                     } else {
                         Flasher::setFlasher('BARANG GAGAL', 'DITAMBAHKAN', 'danger');
-                        $redirectUrl = "tambah-data.php";
+                        $redirectUrl = "barang-tambah-data.php";
                         header("Location: $redirectUrl");
                         exit;
                     }
@@ -51,7 +55,9 @@ class Barang extends Database{
                 }else {
                     $formatBaru = 'BAR001';
                     $pdo = $this->connectDB();
-                    $query = "INSERT INTO `barang`(`id_barang`, `nama _barang`, `stok`, `vendor`, `gambar`) VALUES (:id_barang, :nama_barang, :stock, :vendor, :gambar)";
+                    $query = "INSERT INTO `$this->tabel`(`id_barang`, `nama _barang`, `stok`, `vendor`, `gambar`) 
+                            VALUES 
+                            (:id_barang, :nama_barang, :stock, :vendor, :gambar)";
                     $stmt = $pdo->prepare($query);
                     $stmt->bindParam(':id_barang', $formatBaru);
                     $stmt->bindParam(':nama_barang', $nama);
@@ -62,22 +68,31 @@ class Barang extends Database{
                     $insertRe = $stmt->execute();
                     if ($insertRe) {
                         Flasher::setFlasher('BARANG BERHASIL', 'DITAMBAHKAN', 'success');
-                        $redirectUrl = "tambah-data.php";
+                        $redirectUrl = "barang-tambah-data.php";
                         header("Location: $redirectUrl");
                         exit;
-                    exit;
                     } else {
                         Flasher::setFlasher('BARANG GAGAL', 'DITAMBAHKAN', 'danger');
-                        $redirectUrl = "tambah-data.php";
+                        $redirectUrl = "barang-tambah-data.php";
                         header("Location: $redirectUrl");
                         exit;
                     }
                 }
         }else{
-            Flasher::setFlasher('Barang GAGAL', 'Ditambahkan' . $gambarU , 'danger');
-            $redirectUrl = "tambah-data.php";
+            $msg ='';
+            switch($gambarU){
+                case 0:
+                   $msg = 'Gambar tidak ada';
+                   break;
+                case 1:
+                   $msg = 'Gambar tidak valid';
+                   break;
+            }
+            Flasher::setFlasher('Barang GAGAL', 'Ditambahkan ini' . $msg , 'danger');
+            $redirectUrl = "barang-tambah-data.php";
             header("Location: $redirectUrl");
             exit;
+
         }
     }
 }

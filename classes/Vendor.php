@@ -22,7 +22,9 @@ class Vendor extends Database {
 
             $pdo = $this->connectDB();
 
-            $query = "INSERT INTO `vendor`(`id_vendor`, `nama_vendor`, `kontak_vendor`, `alamat_vendor`, `telp_vendor`) VALUES (:id_vendor, :nama_vendor, :kontak_vendor, :alamat_vendor, :telp_vendor)";
+            $query = "INSERT INTO `vendor`(`id_vendor`, `nama_vendor`, `kontak_vendor`, `alamat_vendor`, `telp_vendor`) 
+                        VALUES 
+                        (:id_vendor, :nama_vendor, :kontak_vendor, :alamat_vendor, :telp_vendor)";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(':id_vendor', $format);
             $stmt->bindParam(':nama_vendor', $nama);
@@ -34,13 +36,13 @@ class Vendor extends Database {
             $insertRe = $stmt->execute();
             if ($insertRe) {
                 Flasher::setFlasher('VENDOR BERHASIL', 'DITAMBAHKAN', 'success');
-                $redirectUrl = "index.php";
+                $redirectUrl = "vendor-tambah-data.php";
                 header("Location: $redirectUrl");
                 exit;
             exit;
             } else {
                 Flasher::setFlasher('VENDOR GAGAL', 'DITAMBAHKAN', 'danger');
-                $redirectUrl = "index.php";
+                $redirectUrl = "vendor-tambah-data.php";
                 header("Location: $redirectUrl");
                 exit;
             }
@@ -48,7 +50,9 @@ class Vendor extends Database {
         }else{
             $pdo = $this->connectDB();
             $formatBaru = 'VEN001';
-            $query = "INSERT INTO `vendor`(`id_vendor`, `nama_vendor`, `kontak_vendor`, `alamat_vendor`, `telp_vendor`) VALUES (:id_vendor, :nama_vendor, :kontak_vendor, :alamat_vendor, :telp_vendor)";
+            $query = "INSERT INTO `vendor`(`id_vendor`, `nama_vendor`, `kontak_vendor`, `alamat_vendor`, `telp_vendor`) 
+                        VALUES 
+                        (:id_vendor, :nama_vendor, :kontak_vendor, :alamat_vendor, :telp_vendor)";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(':id_vendor', $formatBaru);
             $stmt->bindParam(':nama_vendor', $nama);
@@ -60,13 +64,13 @@ class Vendor extends Database {
             $insertRe = $stmt->execute();
             if ($insertRe) {
                 Flasher::setFlasher('VENDOR BERHASIL', 'DITAMBAHKAN', 'success');
-                $redirectUrl = "index.php";
+                $redirectUrl = "vendor-tambah-data.php";
                 header("Location: $redirectUrl");
                 exit;
             exit;
             } else {
                 Flasher::setFlasher('VENDOR GAGAL', 'DITAMBAHKAN', 'danger');
-                $redirectUrl = "index.php";
+                $redirectUrl = "vendor-tambah-data.php";
                 header("Location: $redirectUrl");
                 exit;
             }
