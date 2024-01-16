@@ -95,4 +95,88 @@ class Barang extends Database{
 
         }
     }
+
+    public function getBarang()
+    {
+        $sql = 'SELECT * FROM ' . $this->tabel . ' ORDER BY id_barang ASC';
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
+    public function getditBarang($id_barang){
+        
+        $sql = "SELECT * FROM ". $this->tabel ." WHERE id_barang = :id_barang";
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->bindParam(':id_barang', $id_barang);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function updateBarang($nama, $stock, $vendor, $gambar, $id_barang){
+        $gambarUnic = Flasher::uploadGambar($gambar, 'BARANG');
+        if(!is_numeric($gambarUnic)){
+            $sql = "UPDATE " .$this->tabel. " SET nama_barang=:nama_barang, stok=:stock, vendor=:vendor, gambar=:gambar WHERE id_barang=:id_barang";
+            $stmt = $this->connectDB()->prepare($sql);
+            $stmt->bindParam(':id_barang', $id_barang);
+            $stmt->bindParam(':nama_barang', $nama);
+            $stmt->bindParam(':stock', $stock);
+            $stmt->bindParam(':vendor', $vendor);
+            $stmt->bindParam(':gambar', $gambarUnic);
+
+            $update_exe = $stmt->execute();
+
+            if ($update_exe) {
+                Flasher::setFlasher('BARANG ' .$id_barang. ' BERHASIL', 'DIUPDATE', 'success');
+                $redirectUrl = "tampil-data-barang.php";
+                header("Location: $redirectUrl");
+                exit;
+            } else {
+                Flasher::setFlasher('BARANG ' .$id_barang. ' GAGAL', 'DIUPDATE', 'danger');
+                $redirectUrl = "tampil-data-barang.php";
+                header("Location: $redirectUrl");
+                exit;
+            }
+        }else{
+            $msg ='';
+            switch($gambarUnic){
+                case 0:
+                $msg = 'Gambar tidak ada';
+                break;
+                case 1:
+                $msg = 'Gambar tidak valid';
+                break;
+            }
+            Flasher::setFlasher('Barang ' .$id_barang. '  GAGAL', 'Diupdate ini' . $msg , 'danger');
+            $redirectUrl = "tampil-data-barang.php";
+            header("Location: $redirectUrl");
+            exit;
+
+        }
+    }
+
+    public function delBarang($id_barang){
+
+        $sql = "DELETE FROM ". $this->tabel ." WHERE id_barang = :id_barang";
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->bindParam(':id_barang', $id_barang);
+        $delBarang = $stmt->execute();
+
+        if ($delBarang) {
+            Flasher::setFlasher('BARANG ' .$id_barang. ' BERHASIL', 'DIHAPUS', 'success');
+            $redirectUrl = "tampil-data-barang.php";
+            header("Location: $redirectUrl");
+            exit;
+        exit;
+        } else {
+            Flasher::setFlasher('BARANG ' .$id_barang. ' GAGAL', 'DIHAPUS', 'danger');
+            $redirectUrl = "tampil-data-barang.php";
+            header("Location: $redirectUrl");
+            exit;
+        }
+    }
 }
