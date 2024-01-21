@@ -50,7 +50,7 @@ echo '</pre>';
                         ?>
                         <tr>
                             <td><?= isset($item['id_barang']) ? $item['id_barang'] : 'N/A' ?></td>
-                            <td><?= isset($item['nama _barang']) ? $item['nama _barang'] : 'N/A' ?></td>
+                            <td><?= isset($item['nama_barang']) ? $item['nama_barang'] : 'N/A' ?></td>
                             <td><?= isset($item['stok']) ? $item['stok'] : 'N/A' ?></td>
                             <td><?= isset($item['vendor']) ? $item['vendor'] : 'N/A' ?></td>
                             <td>

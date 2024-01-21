@@ -39,7 +39,7 @@ Class System extends Database {
                         $id_user = $row['id_user'];
                         $count = $stmt->rowCount();
                         
-                        session_start();
+                        // session_start();
                         if ($count > 0) {
                             switch($role){
                                 case 'ADMIN' :

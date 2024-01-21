@@ -15,13 +15,7 @@ if (isset($_POST['simpan_data'])){
 $dataVendor = $vendor->getVendor();
 
 
-?>
-
-<body>
-    <div class="flash">
-        <?= Flasher::flash() ?>
-    </div>
-    <form action="#" method="POST">
+?><form action="#" method="POST">
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Vendor</label>
                 <input type="text" name="nama_vendor">
@@ -48,6 +42,12 @@ $dataVendor = $vendor->getVendor();
             </div>
 
     </form>
+
+<body>
+    <div class="flash">
+        <?= Flasher::flash() ?>
+    </div>
+    
 <?php
 
 echo '<pre>';

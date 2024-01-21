@@ -28,7 +28,7 @@ class Barang extends Database{
 
 
                     $pdo = $this->connectDB();
-                    $query = "INSERT INTO $this->tabel (`id_barang`, `nama _barang`, `stok`, `vendor`, `gambar`) 
+                    $query = "INSERT INTO $this->tabel (`id_barang`, `nama_barang`, `stok`, `vendor`, `gambar`) 
                             VALUES 
                             (:id_barang, :nama_barang, :stock, :vendor, :gambar)";
                     $stmt = $pdo->prepare($query);
@@ -55,7 +55,7 @@ class Barang extends Database{
                 }else {
                     $formatBaru = 'BAR001';
                     $pdo = $this->connectDB();
-                    $query = "INSERT INTO `$this->tabel`(`id_barang`, `nama _barang`, `stok`, `vendor`, `gambar`) 
+                    $query = "INSERT INTO `$this->tabel`(`id_barang`, `nama_barang`, `stok`, `vendor`, `gambar`) 
                             VALUES 
                             (:id_barang, :nama_barang, :stock, :vendor, :gambar)";
                     $stmt = $pdo->prepare($query);
@@ -82,8 +82,8 @@ class Barang extends Database{
             $msg ='';
             switch($gambarU){
                 case 0:
-                   $msg = 'Gambar tidak ada';
-                   break;
+                    $msg = 'Gambar tidak ada';
+                    break;
                 case 1:
                    $msg = 'Gambar tidak valid';
                    break;
