@@ -2,6 +2,8 @@
 
 class Vendor extends Database {
 
+    private $tabel = 'vendor';
+
     public function tambahVendor($nama,$kontak,$alamat,$telp_vendor){
         $sql = 'SELECT id_vendor FROM vendor order by id_vendor desc';
         $result = $this->connectDB()->query($sql);
@@ -35,7 +37,7 @@ class Vendor extends Database {
             // 
             $insertRe = $stmt->execute();
             if ($insertRe) {
-                Flasher::setFlasher('VENDOR BERHASIL', 'DITAMBAHKAN', 'success');
+                Flasher::setFlasher('VENDOR BERHA   SIL', 'DITAMBAHKAN', 'success');
                 $redirectUrl = "vendor-tambah-data.php";
                 header("Location: $redirectUrl");
                 exit;
@@ -80,7 +82,7 @@ class Vendor extends Database {
 
     public function getVendor()
     {
-        $sql = 'SELECT * FROM vendor ORDER BY id_vendor ASC';
+        $sql = 'SELECT * FROM '. $this->tabel.' ORDER BY id_vendor ASC';
         $stmt = $this->connectDB()->prepare($sql);
         $stmt->execute();
         if($stmt->rowCount() > 0){
@@ -89,4 +91,54 @@ class Vendor extends Database {
             return false;
         }
     }
+
+    public function editVendor($id_vendor, $nama, $kontak, $alamat, $telp_vendor) {
+        $sql = "UPDATE vendor SET 
+                nama_vendor = :nama_vendor, 
+                kontak_vendor = :kontak_vendor, 
+                alamat_vendor = :alamat_vendor, 
+                telp_vendor = :telp_vendor 
+                WHERE id_vendor = :id_vendor";
+
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->bindParam(':id_vendor', $id_vendor);
+        $stmt->bindParam(':nama_vendor', $nama);
+        $stmt->bindParam(':kontak_vendor', $kontak);
+        $stmt->bindParam(':alamat_vendor', $alamat);
+        $stmt->bindParam(':telp_vendor', $telp_vendor);
+
+        $updateResult = $stmt->execute();
+
+        if ($updateResult) {
+            Flasher::setFlasher('VENDOR BERHASIL', 'DIUPDATE', 'success');
+        } else {
+            Flasher::setFlasher('VENDOR GAGAL', 'DIUPDATE', 'danger');
+        }
+
+        $redirectUrl = "vendor-tambah-data.php"; 
+        header("Location: $redirectUrl");
+        exit;
+    }
+
+    public function delVendor($id_vendor){
+
+        $sql = "DELETE FROM ". $this->tabel ." WHERE id_vendor = :id_vendor";
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->bindParam(':id_vendor', $id_vendor);
+        $delBarang = $stmt->execute();
+
+        if ($delBarang) {
+            Flasher::setFlasher('BARANG ' .$id_vendor. ' BERHASIL', 'DIHAPUS', 'success');
+            $redirectUrl = "vendor-tambah-data.php";
+            header("Location: $redirectUrl");
+            exit;
+        exit;
+        } else {
+            Flasher::setFlasher('BARANG ' .$id_vendor. ' GAGAL', 'DIHAPUS', 'danger');
+            $redirectUrl = "vendor-tambah-data.php";
+            header("Location: $redirectUrl");
+            exit;
+        }
+    }
+
 }

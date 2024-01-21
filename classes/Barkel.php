@@ -39,4 +39,22 @@ class Barkel extends Database
                     exit;
                 }
     }
+
+    public function getDataBarangKeluar()
+{
+    $sql = "SELECT *
+            FROM $this->tabel
+            JOIN $this->tabel_barang 
+            ON 
+            $this->tabel.id_barang = $this->tabel_barang.id_barang
+            ORDER BY $this->tabel.tanggal DESC"; 
+    
+    $stmt = $this->connectDB()->prepare($sql);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 }
