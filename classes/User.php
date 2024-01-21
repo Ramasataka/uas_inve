@@ -51,4 +51,18 @@ class User extends Database{
 
         }
     }
+
+    public function getKaryawan()
+    {
+        $sql = 'SELECT * FROM ' . $this->tabel . ' WHERE role = "KARYAWAN" ORDER BY id_user ASC';
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
+
 }

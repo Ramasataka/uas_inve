@@ -23,6 +23,14 @@ if (isset($_POST['update_data'])){
     $stock = $_POST['stock'];
     $selectVendor = $_POST['vendor'];
     $image = $_FILES['image'];
+
+    if (!empty($_FILES['image']['name'])) {
+        $image = $_FILES['image'];
+    } else {
+        // Jika tidak ada file baru, tetapkan nilai gambar ke nilai yang saat ini ada di database
+        $image = $geditbarang->gambar;
+    }
+
     $barang->updateBarang($nama, $stock, $selectVendor, $image, $id_barang);
 }
 ?>
@@ -38,17 +46,15 @@ if (isset($_POST['update_data'])){
         <input type="hidden" name="id_barang" value="<?= $geditbarang->id_barang ?>">
         <div class="mb-3">
             <label for="img">Input Gambar</label>
-            <?php
+                <?php
                 if (isset($geditbarang->gambar)) {
                     $gambarPath = '../../img/barang_img/' . $geditbarang->gambar;
                     echo '<img src="' . $gambarPath . '" style="width: 100px; height: auto; object-fit: cover;">';
-                    
-                    
                 } else {
                     echo 'N/A';
                 }
                 ?>
-            <input type="file" name="image" value="<?= $geditbarang->gambar; ?>">
+            <input type="file" name="image">
         </div>
         
         <div class="mb-3">

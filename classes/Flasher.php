@@ -23,34 +23,43 @@ class Flasher {
     }
 
     public static function uploadGambar($foto, $kode){
-        $fileName = $foto['name'];
-        // $fileSize = $foto['image']['size'];
-        $error = $foto['error'];
-        $tmpName = $foto['tmp_name'];
-    
-        if ($error === 4) {
-            return 0;
-        }
-    
-        $validImageExtensions = ['jpg', 'jpeg', 'png'];
-        $imageExtension = explode('.', $fileName);
-        $imageExt = strtolower(end($imageExtension));
-    
-        if (!in_array($imageExt, $validImageExtensions)) {
-            return 1;
-        }
-        $imageName = time() . '-' . $fileName;
-        
-        switch($kode) {
-            case 'BARANG':
-                move_uploaded_file($tmpName, '../../img/barang_img/' . $imageName);
-                break;
-            case 'USER':
-                move_uploaded_file($tmpName, '../../img/user_img/' . $imageName);
-                break;
-        }
-    
-        return $imageName;
+    $fileName = $foto['name'];
+    $error = $foto['error'];
+    $tmpName = $foto['tmp_name'];
+
+    if ($error === 4) {
+        return 'Gambar tidak ada';
     }
+
+    $validImageExtensions = ['jpg', 'jpeg', 'png'];
+    $imageExtension = explode('.', $fileName);
+    $imageExt = strtolower(end($imageExtension));
+
+    if (!in_array($imageExt, $validImageExtensions)) {
+        return 'Gambar tidak valid';
+    }
+
+    $imageName = time() . '-' . $fileName;
+
+    switch($kode) {
+        case 'BARANG':
+            if (move_uploaded_file($tmpName, '../../img/barang_img/' . $imageName)) {
+                return $imageName; // Successful upload
+            } else {
+                return 'Gagal mengunggah gambar'; // Failed upload
+            }
+            break;
+        case 'USER':
+            if (move_uploaded_file($tmpName, '../../img/user_img/' . $imageName)) {
+                return $imageName; // Successful upload
+            } else {
+                return 'Gagal mengunggah gambar'; // Failed upload
+            }
+            break;
+        default:
+            return 'Kode tidak valid';
+    }
+}
+
     
 }
