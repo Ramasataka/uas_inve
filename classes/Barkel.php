@@ -7,7 +7,7 @@ class Barkel extends Database
 
     public function kurangBarang($jumlah, $id_barang, $user_id)
     {   
-        $redirectUrl = "barkel.php";
+        $redirectUrl = "barkel-tambah.php";
         $pdo = $this->connectDB();
         $tanggal_masuk = date("Y-m-d");
 

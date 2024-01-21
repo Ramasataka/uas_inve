@@ -26,52 +26,11 @@ if (isset($_POST['simpan_data'])){
         <h2>Data Barang Masuk</h2>
 
         <!-- Button trigger modal -->
+        <a href="barsuk-tambah.php">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDataModal">
             Tambahkan
         </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Barang Masuk</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="barsuk.php" method="POST">
-                            <div class="mb-3">
-                                <label for="">SELECT BARANG</label>
-                                <select name="barang" class="js-example-basic-single form-control " title="Select the barangr" id="barang" >  
-                                    <?php
-                                        if($getbarang){
-                                            foreach($getbarang as $items){
-                                                ?>
-                                                    <option value="<?=$items['id_barang'] ?>"><?=$items['nama_barang'] ?></option>
-                                                <?php
-                                            }
-                                        }else{
-                                            echo'No data';
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Jumlah</label>
-                                <input type="number" name="jumlah">
-                            </div>
-
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="mb">
-                            <input type="submit" class="btn btn-primary" name="simpan_data" value="kirim">
-                        </div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </a>
 
         <table class="table">
             <thead>

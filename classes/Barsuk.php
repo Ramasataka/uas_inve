@@ -9,6 +9,7 @@ class Barsuk extends Database
     {
         $pdo = $this->connectDB();
         $tanggal_masuk = date("Y-m-d");
+        $redirectUrl = "barsuk-tambah.php";
 
         $sql = "INSERT INTO $this->tabel (`tanggal_masuk`, `jumlah`, `id_user`, `id_barang`) 
                 VALUES 
@@ -24,19 +25,16 @@ class Barsuk extends Database
                     $insertStock = $updateStok->execute();
                     if($insertStock){
                         Flasher::setFlasher('DATA BARANG MASUK BERHASIL', 'DITAMBAHKAN', 'success');
-                        $redirectUrl = "barsuk.php";
                         header("Location: $redirectUrl");
                         exit;
                     }
                     else{
                         Flasher::setFlasher('STOK BARANG GAGAL', 'DITAMBAHKAN', 'danger');
-                        $redirectUrl = "barsuk.php";
                         header("Location: $redirectUrl");
                         exit;
                     }
                 } else {
                     Flasher::setFlasher('DATA BARANG MASUK GAGAL', 'DITAMBAHKAN', 'danger');
-                    $redirectUrl = "barsuk.php";
                     header("Location: $redirectUrl");
                     exit;
                 }
