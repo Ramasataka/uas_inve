@@ -92,6 +92,15 @@ class Vendor extends Database {
         }
     }
 
+    public function getTotalVendor() {
+        $sql = 'SELECT COUNT(*) AS total_vendor FROM ' . $this->tabel;
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['total_vendor'];
+    }
+
     public function getditVendor($id_vendor){
         
         $sql = "SELECT * FROM ". $this->tabel ."  WHERE id_vendor = :id_vendor";

@@ -64,6 +64,15 @@ class User extends Database{
         }
     }
 
+    public function getTotalKaryawan() {
+        $sql = 'SELECT COUNT(*) AS total_karyawan FROM ' . $this->tabel . ' WHERE role = "KARYAWAN"';
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['total_karyawan'];
+    }
+
     public function getditUser($id_user){
         
         $sql = "SELECT * FROM ". $this->tabel ."  WHERE id_user = :id_user";

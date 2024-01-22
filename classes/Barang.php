@@ -108,6 +108,15 @@ class Barang extends Database{
         }
     }
 
+    public function getTotalBarang() {
+        $sql = 'SELECT COUNT(*) AS total_barang FROM ' . $this->tabel;
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['total_barang'];
+    }
+
     public function getditBarang($id_barang){
         
         $sql = "SELECT * FROM ". $this->tabel ." INNER JOIN vendor ON barang.vendor = vendor.id_vendor WHERE id_barang = :id_barang";

@@ -16,8 +16,11 @@ if(isset($_POST['logout']))
 ?>
 
 <body>
-    <h1>SELAMAT DATANG KARYAWAN</h1>
-    <form action="" method="POST">
-   <button type="input" name="logout" class="btn btn-primary">LOGOUT</button>
-   </form>
+<main class="d-flex text-bg-dark">
+    <!-- sidebar -->
+    <?php
+    include '../../sidebar.php';
+    ?>
+    <!-- sidebar -->
+</main>
 </body>

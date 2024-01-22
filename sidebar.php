@@ -37,6 +37,9 @@ if (isset($_POST['logout'])) {
                     VENDOR
                 </a>
             </li>
+            <?php
+                if($_SESSION['user'] == 'KARYAWAN'){
+            ?>
             <br>
             <li>
                 <a href="tampil-data-user.php" class="nav-link text-white">
@@ -44,6 +47,7 @@ if (isset($_POST['logout'])) {
                     KARYAWAN
                 </a>
             </li>
+            <?php }?>
             <br>
             <li>
                 <a href="barsuk.php" class="nav-link text-white">
