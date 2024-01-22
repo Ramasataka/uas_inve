@@ -149,7 +149,7 @@ if (isset($_POST['delete_barang'])){
                     ?>
                 </td>
                             <td>
-                                <a class="btn btn-primary" href="barang-edit-data.php?id_barang=<?= $item['id_barang'] ?> ">  edit  </a>
+                                <a class="btn btn-primary" href="barang-edit-data.php?id_barang=<?= $item['id_barang'] ?> ">  EDIT  </a>
 
                                 <form action="#" method="POST">
                                     <button class="btn btn-danger" style="display: inline-block;" type="submit" name="delete_barang" value="<?= $item['id_barang'] ?>">Delete</button>

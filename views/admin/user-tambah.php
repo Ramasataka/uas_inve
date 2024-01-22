@@ -24,18 +24,19 @@ if (isset($_POST['simpan_data'])){
 ?>
 
 <body>
-
-
+    
     <main class="d-flex text-bg-dark">
-    
-<?php
-include '../../sidebar.php';
-?>
-    
-    <div class="container-fluid">
-    <div class="flash">
-        <?= Flasher::flash() ?>
-    </div>
+        <!-- sidebar -->
+        <?php
+        include '../../sidebar.php';
+        ?>
+        <!-- sidebar -->
+        
+        
+        <div class="container-fluid">
+        <div class="flash">
+            <?= Flasher::flash() ?>
+        </div>
             <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
                 <div class="col-md-8">
                     <div class="card text-bg-dark" style="border: none; box-shadow: none; ">

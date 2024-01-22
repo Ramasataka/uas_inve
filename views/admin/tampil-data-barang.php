@@ -144,7 +144,6 @@ echo '</pre>';
                                 <form action="#" method="POST">
                                     <button type="submit" name="delete_barang" value="<?= $item['id_barang'] ?>">Delete</button>
                                 </form>
-                                <?php echo $item['id_barang'] ?>
                             </td>
                         </tr>
                     <?php

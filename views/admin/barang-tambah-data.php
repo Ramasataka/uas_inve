@@ -90,7 +90,8 @@ if (isset($_POST['simpan_data'])){
 
                             <div class="mb-3 text-bg-dark"> 
                                 <label for="img" class="form-label">Input Gambar</label>
-                                <input type="file" class="form-control text-bg-dark" name="image">
+                                <input class="form-control text-bg-dark" type="file" id="formFile" name="image" onchange="prevImage()"><br>
+                                <img id="prevImg" class="mx-auto w-25">
                             </div>
 
                                 <br>
@@ -112,6 +113,7 @@ if (isset($_POST['simpan_data'])){
                                 <div class="mb-3">
                                     <label for="vendor" class="form-label">SELECT VENDOR</label>
                                     <select name="vendor" class="js-example-basic-single form-select text-bg-dark" title="Select the vendor" id="vendor">
+                                    <option hidden="hidden">Pilih Vendor</option>
                                         <?php
                                         if ($getVendor) {
                                             foreach ($getVendor as $items) {
@@ -166,4 +168,13 @@ if (isset($_POST['simpan_data'])){
                 theme: 'bootstrap'
             });
         });
+
+
+        function prevImage() {
+            const formFile = document.getElementById('formFile');
+            const [file] = formFile.files;
+            if (file) {
+                document.getElementById('prevImg').src = URL.createObjectURL(file)
+            }
+        }
 </script>

@@ -12,13 +12,15 @@ if (!$check) {
 
 $dataKaryawan = $user->getKaryawan();
 
+if (isset($_POST['delete_karyawan'])){
+    $id_user = $_POST['delete_karyawan'];
+    $user->delUser($id_user);  
+}
 ?>
 
+<body class="text-bg-dark">
 
-
-
-<body>
-
+    
 <main class="d-flex text-bg-dark">
     <!-- sidebar -->
     <?php
@@ -26,10 +28,19 @@ $dataKaryawan = $user->getKaryawan();
     ?>
     <!-- sidebar -->
 
-    <div class="container mt-5 m-2 text-bg-dark">
+    
+    
+    <div class="container m-3 mt-5 text-bg-dark">    
+        <div class="flash">
+            <?= Flasher::flash() ?>
+        </div>
+
         <div class="d-flex justify-content-between ">
+
             <h2>Data Karyawan</h2>
-            <a href="user-tambah.php" class="btn btn-outline-primary">Tambahkan Data</a>
+            <a href="user-tambah.php" class="btn btn-outline-primary m-2 ">
+                Tambahkan Data
+            </a>
         </div>
         <br>
         <table class="table table-dark text-bg-dark">
@@ -68,7 +79,7 @@ $dataKaryawan = $user->getKaryawan();
                                 ?>
                             </td>
                             <td>
-                                <a href="edit-karyawan.php?id_user=<?= $karyawan['id_user'] ?>" class="btn btn-warning">Edit</a>
+                                <a href="user-edit.php?id_user=<?= $karyawan['id_user'] ?>" class="btn btn-warning">Edit</a>
                                 <form action="#" method="POST" style="display: inline-block;">
                                     <button type="submit" name="delete_karyawan" value="<?= $karyawan['id_user'] ?>" class="btn btn-danger">Delete</button>
                                 </form>
@@ -88,6 +99,7 @@ $dataKaryawan = $user->getKaryawan();
         </table>
     </div>
 
-            </main>
+</main>
+
 </body>
 </html>

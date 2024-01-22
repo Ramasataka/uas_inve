@@ -117,44 +117,25 @@ class Barang extends Database{
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
-    public function updateBarang($nama, $stock, $vendor, $gambar, $id_barang)
+    public function updateBarang($nama, $stock, $vendor, $oldGambar, $id_barang)
     {
-        //cek upload baru ato nga
-        if (!empty($gambar['name'])) {
-            $gambarUnic = Flasher::uploadGambar($gambar, 'BARANG');
+        $redirectUrl = "barang-edit-data.php?id_barang=$id_barang";
+        if (file_exists($_FILES['image']['tmp_name']) || is_uploaded_file($_FILES['image']['tmp_name'])) {
+            $fileName   = $_FILES['image']['name'];
+            $exts       = array('png', 'jpg', 'jpeg');
+            $ext        = pathinfo($fileName, PATHINFO_EXTENSION);
 
-            if (is_numeric($gambarUnic)) {
-                //kalo ga diginiin gamau woi jirlah
-                switch ($gambarUnic) {
-                    case 0:
-                        Flasher::setFlasher('Barang GAGAL', 'Diupdate ini Gambar tidak ada', 'danger');
-                        break;
-                    case 1:
-                        Flasher::setFlasher('Barang GAGAL', 'Diupdate ini Gambar tidak valid', 'danger');
-                        break;
-                }
-                Flasher::setFlasher('Barang GAGAL', 'Diupdate ini' . $msg, 'danger');
-                $redirectUrl = "barang-tampil-data.php";
+            if (!in_array($ext, $exts)) {
+                Flasher::setFlasher('BARANG ' . $id_barang . ' GAGAL', 'DIUPDATE GAMBAR TIDAK SESUAI', 'success');
                 header("Location: $redirectUrl");
-                exit;
+                exit();
             }
-        } else {
-          
-            $gambarUnic = $this->getditBarang($id_barang)->gambar;
-        }
 
-      
-        $gambarPath = '../../img/barang_img/';
-        $newImagePath = $gambarPath . $gambarUnic;
-        
-        if (!empty($gambar['tmp_name']) && is_uploaded_file($gambar['tmp_name'])) {
-            if (!move_uploaded_file($gambar['tmp_name'], $newImagePath)) {
-                Flasher::setFlasher('Gagal menyimpan gambar', 'Diupdate ini', 'danger');
-                $redirectUrl = "barang-tampil-data.php";
-                header("Location: $redirectUrl");
-                exit;
-            }
+            $finalFIle  = time() . '_' . $fileName;
+            move_uploaded_file($_FILES['image']['tmp_name'], '../../img/barang_img/' . $finalFIle);
+            unlink('../../img/barang_img/' . $oldGambar);
         }
+        $file       = $finalFIle ?? $oldGambar;
 
     $sql = "UPDATE " . $this->tabel . " SET nama_barang=:nama_barang, stok=:stock, vendor=:vendor, gambar=:gambar WHERE id_barang=:id_barang";
     $stmt = $this->connectDB()->prepare($sql);
@@ -162,18 +143,16 @@ class Barang extends Database{
     $stmt->bindParam(':nama_barang', $nama);
     $stmt->bindParam(':stock', $stock);
     $stmt->bindParam(':vendor', $vendor);
-    $stmt->bindParam(':gambar', $gambarUnic);
+    $stmt->bindParam(':gambar', $file);
 
     $update_exe = $stmt->execute();
 
     if ($update_exe) {
         Flasher::setFlasher('BARANG ' . $id_barang . ' BERHASIL', 'DIUPDATE', 'success');
-        $redirectUrl = "barang-tampil-data.php";
         header("Location: $redirectUrl");
         exit;
     } else {
         Flasher::setFlasher('BARANG ' . $id_barang . ' GAGAL', 'DIUPDATE', 'danger');
-        $redirectUrl = "barang-tampil-data.php";
         header("Location: $redirectUrl");
         exit;
     }

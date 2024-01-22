@@ -22,14 +22,8 @@ if (isset($_POST['update_data'])){
     $nama = $_POST['nama_barang'];
     $stock = $_POST['stock'];
     $selectVendor = $_POST['vendor'];
-    $image = $_FILES['image'];
+    $image = $_POST['oldGambar'];
 
-    if (!empty($_FILES['image']['name'])) {
-        $image = $_FILES['image'];
-    } else {
-        // Jika tidak ada file baru, tetapkan nilai gambar ke nilai yang saat ini ada di database
-        $image = $geditbarang->gambar;
-    }
 
     $barang->updateBarang($nama, $stock, $selectVendor, $image, $id_barang);
 }
@@ -105,6 +99,7 @@ if (isset($_POST['update_data'])){
                             
                                 <div class="mb-3">
                                     <label class="form-label" for="img">Input Gambar</label>
+                                    <input type="text" name="oldGambar" value="<?= $geditbarang->gambar ?>" hidden>
                                     <input class="form-control text-bg-dark" type="file" name="image">
                                     <br>
                                         <div class="">
@@ -135,13 +130,14 @@ if (isset($_POST['update_data'])){
 
 
 
-                                    <option value="<?= $geditbarang->vendor; ?>" selected=""> <?= $geditbarang->vendor; ?> </option>
                                     <?php
                                         if($getVendor){
 
                                         foreach($getVendor as $items){
+                                            $selected = ($items['id_vendor'] == $geditbarang->vendor) ? 'selected' : '';
                                     ?>
-                                        <option value="<?=$items['id_vendor'] ?>"><?=$items['nama_vendor'] ?></option>
+
+                                            <option value="<?= $items['id_vendor'] ?>" <?= $selected ?>><?= $items['nama_vendor'] ?></option>
                                     <?php
                                             }
                                         }else{
