@@ -92,6 +92,15 @@ class Vendor extends Database {
         }
     }
 
+    public function getditVendor($id_vendor){
+        
+        $sql = "SELECT * FROM ". $this->tabel ."  WHERE id_vendor = :id_vendor";
+        $stmt = $this->connectDB()->prepare($sql);
+        $stmt->bindParam(':id_vendor', $id_vendor);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
     public function editVendor($id_vendor, $nama, $kontak, $alamat, $telp_vendor) {
         $sql = "UPDATE vendor SET 
                 nama_vendor = :nama_vendor, 
@@ -115,7 +124,7 @@ class Vendor extends Database {
             Flasher::setFlasher('VENDOR GAGAL', 'DIUPDATE', 'danger');
         }
 
-        $redirectUrl = "vendor-tambah-data.php"; 
+        $redirectUrl = "vendor-tampil-data.php"; 
         header("Location: $redirectUrl");
         exit;
     }

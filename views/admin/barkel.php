@@ -19,6 +19,12 @@ if (isset($_POST['simpan_data'])){
     $jumlah = $_POST['jumlah'];
     $barkel->kurangBarang($jumlah, $barang, $user_id);
 }
+
+if (isset($_POST['delete_data'])) {
+    $jumlah_delete = $_POST['jumlah_delete'];
+    $id_barang_delete = $_POST['id_barang_delete'];
+    $barkel->deleteBarangKeluar($jumlah_delete, $id_barang_delete);
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,72 +40,9 @@ if (isset($_POST['simpan_data'])){
 
 <main class="d-flex text-bg-dark">
     <!-- sidebar -->
-    <div id="mainbody" class="d-flex flex-column p-3 vh-100 text-bg-dark" 
-            style="width: 280px; height: 100%; overflow-y: auto; width: 280px;
-                    height: 100%;
-                    overflow-y: auto;
-                    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.2);">
-        <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <svg class="bi pe-none me-2" width="40" height="32"></svg>
-            <span class="fs-4">Side Menu</span>
-        </a>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="homepage.php" class="nav-link text-white" aria-current="page">
-                    <svg class="bi pe-none me-2" width="16" height="16"></svg>
-                    HOME
-                </a>
-            </li>
-            <br>
-            <li>
-                <a href="barang-tambah-data.php" class="nav-link  text-white">
-                    <svg class="bi pe-none me-2" width="16" height="16"></svg>
-                    BARANG
-                </a>
-            </li>
-            <br>
-            <li>
-                <a href="vendor-tambah-data.php" class="nav-link text-white">
-                    <svg class="bi pe-none me-2" width="16" height="16"></svg>
-                    VENDOR
-                </a>
-            </li>
-            <br>
-            <li>
-                <a href="user-tambah.php" class="nav-link text-white">
-                    <svg class="bi pe-none me-2" width="16" height="16"></svg>
-                    KARYAWAN
-                </a>
-            </li>
-            <br>
-            <li>
-                <a href="barsuk.php" class="nav-link  text-white">
-                    <svg class="bi pe-none me-2" width="16" height="16"></svg>
-                    BARANG MASUK
-                </a>
-            </li>
-            <br>
-            <li>
-                <a href="barkel.php" class="nav-link active text-white">
-                    <svg class="bi pe-none me-2" width="16" height="16"></svg>
-                    BARANG KELUAR
-                </a>
-            </li>
-            <br><br><br>
-           
-
-        </ul>
-
-        <br>
-        <hr class="mt-4">
-        <div class="dropdown">
-            <form action="" method="POST">
-                <button type="input" name="logout" class="btn btn-primary">LOGOUT</button>
-            </form>
-        </div>
-    </div>
-    <!-- sidebar -->
+    <?php
+    include '../../sidebar.php';
+    ?>
 
 
     <div class="container">
@@ -109,51 +52,7 @@ if (isset($_POST['simpan_data'])){
             <?= Flasher::flash() ?>
         </div>
 
-        <!-- Tombol untuk membuka modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahBarangKeluarModal">
-            Tambah Data Barang Keluar
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="tambahBarangKeluarModal" tabindex="-1" aria-labelledby="tambahBarangKeluarModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahBarangKeluarModalLabel">Tambah Data Barang Keluar</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Formulir untuk menambahkan data barang keluar -->
-                        <form action="barkel.php" method="POST">
-                            <div class="mb-3">
-                                <label for="">SELECT BARANG</label>
-                                <select name="barang" class="js-example-basic-single form-control" title="Select the barangr" id="barang">  
-                                    <?php
-                                        if($getbarang){
-                                            foreach($getbarang as $items){
-                                                ?>
-                                                    <option value="<?=$items['id_barang'] ?>"><?=$items['nama_barang'] ?></option>
-                                                <?php
-                                            }
-                                        } else {
-                                            echo 'No data';
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Jumlah</label>
-                                <input type="number" name="jumlah" class="form-control">
-                            </div>
-
-                            <div class="mb">
-                                <input type="submit" name="simpan_data" value="kirim" class="btn btn-primary">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Tabel untuk menampilkan data barang keluar -->
         
@@ -161,6 +60,8 @@ if (isset($_POST['simpan_data'])){
     <div class="d-flex justify-content-between ">
 
         <h2>Data Barang Keluar</h2>
+        <a href="barkel-tambah.php" class="btn btn-outline-primary">Tambahkan Data</a>
+            </div>
         
     </div>
     <br>
@@ -168,29 +69,44 @@ if (isset($_POST['simpan_data'])){
         <table class="table table-dark text-bg-dark">
             <thead>
                 <tr>
-                    <th scope="col">No</th>
+                    
                     <th scope="col">Tanggal keluar</th>
                     <th scope="col">Nama Barang</th>
                     <th scope="col">Jumlah</th>
+                    <th scope="col">Act</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    if($dataBarkel){
-                        $no = 1;
-                        foreach($dataBarkel as $data){
-                            echo "<tr>";
-                            echo "<th scope='row'>$no</th>";
-                            echo "<td>{$data['tanggal']}</td>";
-                            echo "<td>{$data['nama_barang']}</td>";
-                            echo "<td>{$data['jumlah']}</td>";
-                            echo "</tr>";
-                            $no++;
-                        }
-                    } else {
-                        echo '<tr><td colspan="4">Tidak ada data barang keluar.</td></tr>';
+                <?php if ($dataBarkel) 
+                {
+                    foreach ($dataBarkel as $data)
+                    {
+                    ?>
+                        <tr>
+                            <td><?= isset($data['tanggal']) ? $data['tanggal'] : 'N/A' ?></td>
+                            <td><?= isset($data['nama_barang']) ? $data['nama_barang'] : 'N/A' ?></td>
+                            <td><?= isset($data['jumlah']) ? $data['jumlah'] : 'N/A' ?></td>
+                            <td>
+                                <form action='barkel.php' method='POST'>
+                                    <input type='hidden' name='id_barang_delete' value='<?= isset($data['id_barang']) ? $data['id_barang'] : '' ?>'>
+                                    <input type='hidden' name='jumlah_delete' value='<?= isset($data['jumlah']) ? $data['jumlah'] : '' ?>'>
+                                    <button type='submit' class='btn btn-danger' name='delete_data'>Hapus</button>
+                                </form>
+                            </td>
+                        
+                        </tr>
+                        <?php 
                     }
-                ?>
+                }else {
+
+            ?>
+                <tr>
+                    <td colspan="4">Tidak ada data barang keluar.</td>
+                </tr>
+                
+                
+            <?php } ?>
             </tbody>
         </table>
     </div>

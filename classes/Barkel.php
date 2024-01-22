@@ -41,7 +41,7 @@ class Barkel extends Database
     }
 
     public function getDataBarangKeluar()
-{
+    {
     $sql = "SELECT *
             FROM $this->tabel
             JOIN $this->tabel_barang 
@@ -53,8 +53,39 @@ class Barkel extends Database
     $stmt->execute();
     
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    }
 
+    public function deleteBarangKeluar($jumlah, $id_barang)
+    {
+        $pdo = $this->connectDB();
+
+        $sql = "DELETE FROM $this->tabel WHERE jumlah = :jumlah ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':jumlah', $jumlah);
+        
+
+        $deleteResult = $stmt->execute();
+
+        if ($deleteResult) {
+            $query = "UPDATE $this->tabel_barang SET stok = stok + :jumlahStok WHERE id_barang = :id_barang";
+            $updateStok = $pdo->prepare($query);
+            $updateStok->bindParam(':jumlahStok', $jumlah);
+            $updateStok->bindParam(':id_barang', $id_barang);
+            $updateStock = $updateStok->execute();
+
+            if ($updateStock) {
+                Flasher::setFlasher('STOCK BERHASIL', 'DITAMBAHKAN KEMBALI', 'success');
+            } else {
+                Flasher::setFlasher('STOK BARANG GAGAL', 'DITAMBAHKAN KEMBALI', 'danger');
+            }
+        } else {
+            Flasher::setFlasher('DATA BARANG KELUAR GAGAL', 'DIHAPUS', 'danger');
+        }
+
+        $redirectUrl = "barkel.php";
+        header("Location: $redirectUrl");
+        exit;
+    }
 
 
 }

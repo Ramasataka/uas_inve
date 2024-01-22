@@ -98,7 +98,7 @@ class Barang extends Database{
 
     public function getBarang()
     {
-        $sql = 'SELECT * FROM ' . $this->tabel . ' ORDER BY id_barang ASC';
+        $sql = 'SELECT * FROM ' . $this->tabel . ' INNER JOIN vendor ON barang.vendor = vendor.id_vendor ORDER BY id_barang ASC';
         $stmt = $this->connectDB()->prepare($sql);
         $stmt->execute();
         if($stmt->rowCount() > 0){
@@ -110,7 +110,7 @@ class Barang extends Database{
 
     public function getditBarang($id_barang){
         
-        $sql = "SELECT * FROM ". $this->tabel ." WHERE id_barang = :id_barang";
+        $sql = "SELECT * FROM ". $this->tabel ." INNER JOIN vendor ON barang.vendor = vendor.id_vendor WHERE id_barang = :id_barang";
         $stmt = $this->connectDB()->prepare($sql);
         $stmt->bindParam(':id_barang', $id_barang);
         $stmt->execute();
@@ -134,7 +134,7 @@ class Barang extends Database{
                         break;
                 }
                 Flasher::setFlasher('Barang GAGAL', 'Diupdate ini' . $msg, 'danger');
-                $redirectUrl = "tampil-data-barang.php";
+                $redirectUrl = "barang-tampil-data.php";
                 header("Location: $redirectUrl");
                 exit;
             }
@@ -150,7 +150,7 @@ class Barang extends Database{
         if (!empty($gambar['tmp_name']) && is_uploaded_file($gambar['tmp_name'])) {
             if (!move_uploaded_file($gambar['tmp_name'], $newImagePath)) {
                 Flasher::setFlasher('Gagal menyimpan gambar', 'Diupdate ini', 'danger');
-                $redirectUrl = "tampil-data-barang.php";
+                $redirectUrl = "barang-tampil-data.php";
                 header("Location: $redirectUrl");
                 exit;
             }
@@ -168,12 +168,12 @@ class Barang extends Database{
 
     if ($update_exe) {
         Flasher::setFlasher('BARANG ' . $id_barang . ' BERHASIL', 'DIUPDATE', 'success');
-        $redirectUrl = "tampil-data-barang.php";
+        $redirectUrl = "barang-tampil-data.php";
         header("Location: $redirectUrl");
         exit;
     } else {
         Flasher::setFlasher('BARANG ' . $id_barang . ' GAGAL', 'DIUPDATE', 'danger');
-        $redirectUrl = "tampil-data-barang.php";
+        $redirectUrl = "barang-tampil-data.php";
         header("Location: $redirectUrl");
         exit;
     }
@@ -189,13 +189,13 @@ class Barang extends Database{
 
         if ($delBarang) {
             Flasher::setFlasher('BARANG ' .$id_barang. ' BERHASIL', 'DIHAPUS', 'success');
-            $redirectUrl = "tampil-data-barang.php";
+            $redirectUrl = "barang-tampil-data.php";
             header("Location: $redirectUrl");
             exit;
         exit;
         } else {
             Flasher::setFlasher('BARANG ' .$id_barang. ' GAGAL', 'DIHAPUS', 'danger');
-            $redirectUrl = "tampil-data-barang.php";
+            $redirectUrl = "barang-tampil-data.php";
             header("Location: $redirectUrl");
             exit;
         }

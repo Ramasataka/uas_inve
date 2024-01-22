@@ -14,10 +14,25 @@ $dataKaryawan = $user->getKaryawan();
 
 ?>
 
+
+
+
 <body>
-    <div class="container mt-3">
-        <h2>Data Karyawan</h2>
-        <table class="table table-bordered">
+
+<main class="d-flex text-bg-dark">
+    <!-- sidebar -->
+    <?php
+    include '../../sidebar.php';
+    ?>
+    <!-- sidebar -->
+
+    <div class="container mt-5 m-2 text-bg-dark">
+        <div class="d-flex justify-content-between ">
+            <h2>Data Karyawan</h2>
+            <a href="user-tambah.php" class="btn btn-outline-primary">Tambahkan Data</a>
+        </div>
+        <br>
+        <table class="table table-dark text-bg-dark">
             <thead>
                 <tr>
                     <th>ID User</th>
@@ -72,5 +87,7 @@ $dataKaryawan = $user->getKaryawan();
             </tbody>
         </table>
     </div>
+
+            </main>
 </body>
 </html>
