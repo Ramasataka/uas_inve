@@ -74,11 +74,7 @@ if (isset($_POST['simpan_edit_data'])) {
                         </div>
                     </div>
                 </div>
-                <div class="footer">
-
-                    <p class="text-center mt-3 text-secondary">RAMA ARJI RAMWI </p>
-                    <p class="text-center mt-3 text-secondary">2024</p>
-                </div>
+                
             </div>
     </div>
         

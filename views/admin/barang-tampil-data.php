@@ -47,60 +47,7 @@ if (isset($_POST['delete_barang'])){
 <!-- Button trigger modal -->
 
 
-<!-- Modal Tambah barang -->
-<div class="modal fade" id="tambahBarang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Data Barang</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="POST" enctype="multipart/form-data">
 
-                <div class="mb-3">
-                    <label for="img">Input Gambar</label>
-                    <input type="file" name="image">
-                </div>
-                
-                <div class="mb-3">
-                        <label for="nama" class="form-label">Nama Barang</label>
-                        <br>
-                        <input type="text" name="nama_barang">
-                </div>
-
-                <div class="mb-3">
-                        <label for="stock" class="form-label">stock</label>
-                        <br>
-                        <input type="number" name="stock" value="0">
-                </div>
-
-                <div class="mb-3">
-                    <label for="">SELECT VENDOR</label>
-                    <br>
-                    <select name="vendor" class="js-example-basic-single form-select form-control " title="Select the vendor" id="vendor" >  
-                        <?php
-                            if($getVendor){
-                                foreach($getVendor as $items){
-                                    ?>
-                                        <option value="<?=$items['id_vendor'] ?>"><?=$items['nama_vendor'] ?></option>
-                                    <?php
-                                }
-                            }else{
-                                echo'No data';
-                            }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" name="simpan_data" class="btn btn-primary">Understood</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
     <div class="container m-2 mt-5 text-bg-dark">

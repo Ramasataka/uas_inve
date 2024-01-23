@@ -90,7 +90,7 @@ if (isset($_POST['update_data'])){
             </div>
             <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
                 <div class="col-md-8">
-                    <div class="card text-bg-dark" style="border: none; box-shadow: none; ">
+                    <div class="card text-bg-dark" >
                         <div class="card-body">
 
                             <form action="" method="POST" enctype="multipart/form-data">
@@ -146,7 +146,7 @@ if (isset($_POST['update_data'])){
                                     ?>
                                 </select>
                             </div>
-                            <div class="d-grid gap-2">
+                            <div class="d-grid gap-2 m-3">
                             <input class="btn btn-primary" type="submit" name="update_data" value="kirim">
                             </div>
                             </form>      

@@ -231,7 +231,7 @@ $totalVendor = $vendor->getTotalVendor();
                 </div>
                 
             </div>
-            <p class="text-center text-secondary">anjay footer</p>
+         
         </div>
         <!-- content -->
     </main>

@@ -41,7 +41,7 @@ class Barang extends Database{
                     $insertRe = $stmt->execute();
                     if ($insertRe) {
                         Flasher::setFlasher('BARANG BERHASIL', 'DITAMBAHKAN', 'success');
-                        $redirectUrl = "barang-tambah-data.php";
+                        $redirectUrl = "barang-tampil-data.php";
                         header("Location: $redirectUrl");
                         exit;
                     exit;
@@ -68,7 +68,7 @@ class Barang extends Database{
                     $insertRe = $stmt->execute();
                     if ($insertRe) {
                         Flasher::setFlasher('BARANG BERHASIL', 'DITAMBAHKAN', 'success');
-                        $redirectUrl = "barang-tambah-data.php";
+                        $redirectUrl = "barang-tampil-data.php";
                         header("Location: $redirectUrl");
                         exit;
                     } else {
@@ -158,6 +158,7 @@ class Barang extends Database{
 
     if ($update_exe) {
         Flasher::setFlasher('BARANG ' . $id_barang . ' BERHASIL', 'DIUPDATE', 'success');
+        $redirectUrl = "barang-tampil-data.php";
         header("Location: $redirectUrl");
         exit;
     } else {
